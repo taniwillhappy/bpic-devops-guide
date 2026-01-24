@@ -1,0 +1,197 @@
+/* src/assets/css/sidebar.css */
+
+/* ตัวแปรสี */
+:root {
+  --sidebar-bg: #1e1e2d;
+  --sidebar-text: #a2a3b7;
+  --sidebar-hover: #2b2b40;
+  --sidebar-active: #4e73df;
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 80px;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  background-color: var(--sidebar-bg);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  z-index: 101;
+}
+
+.sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+.sidebar-logo {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+/* --- ส่วนที่ต้องแก้ไขใน sidebar.css --- */
+
+.sidebar-menu {
+  flex: 1;
+  padding: 20px 0;
+  
+  /* เพิ่มส่วนนี้เพื่อให้เลื่อนขึ้นลงได้ */
+  overflow-y: auto; 
+  overflow-x: hidden; /* ป้องกันการเลื่อนซ้ายขวา */
+}
+
+/* ตกแต่งแถบเลื่อน (Scrollbar) สำหรับ Chrome, Safari และ Edge */
+.sidebar-menu::-webkit-scrollbar {
+  width: 5px; /* ความกว้างของแถบเลื่อน */
+}
+
+.sidebar-menu::-webkit-scrollbar-track {
+  background: var(--sidebar-bg); /* สีพื้นหลังแถบเลื่อน */
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb {
+  background: #444; /* สีของตัวเลื่อน */
+  border-radius: 10px;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb:hover {
+  background: var(--sidebar-active); /* เปลี่ยนสีเมื่อเอาเมาส์ไปวาง */
+}
+
+/* สำหรับ Firefox */
+.sidebar-menu {
+  scrollbar-width: thin;
+  scrollbar-color: #444 var(--sidebar-bg);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 25px;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.menu-item:hover {
+  background-color: var(--sidebar-hover);
+  color: white;
+}
+
+.menu-item.active {
+  background-color: var(--sidebar-hover);
+  color: var(--sidebar-active);
+  border-right: 4px solid var(--sidebar-active);
+}
+
+.menu-item .icon {
+  font-size: 20px;
+  min-width: 30px;
+  margin-right: 15px;
+}
+
+
+
+.toggle-btn {
+  font-size: 25px;
+  background: none;
+  border: none;
+  color: white;
+  padding: 20px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.toggle-btn:hover {
+  background: var(--sidebar-hover);
+}
+
+.logo-text {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.main-content {
+  margin-left: var(--sidebar-width); 
+  transition: all 0.3s ease;
+  /* padding: 20px; */
+  min-height: 100vh;
+  width: 100%;
+}
+
+.main-content.expanded {
+  margin-left: var(--sidebar-collapsed-width);
+}
+
+.mobile-toggle-btn {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1000;
+  background: var(--sidebar-bg);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 90;
+}
+
+.desktop-only {
+  display: flex;
+}
+
+/* --- Media Query สำหรับ Mobile --- */
+@media (max-width: 768px) {
+  .mobile-toggle-btn {
+    display: block;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  .sidebar {
+    left: -260px;
+    width: 260px !important;
+  }
+
+  .sidebar.mobile-active {
+    left: 0;
+  }
+
+  .sidebar-logo {
+    justify-content: center;
+    padding: 20px 0;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding-top: 60px;
+  }
+
+  .sidebar.collapsed {
+    width: 260px;
+  }
+}

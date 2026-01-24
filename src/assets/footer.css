@@ -1,0 +1,51 @@
+/* --- Footer Section: ชิดขอบซ้าย ล่าง ขวา 100% --- */
+.footer-section {
+  background-color: #1e1e2d; /* สีเดียวกับ Sidebar เป๊ะๆ */
+  color: #a2a3b7;
+  
+  /* ลบ margin ออกให้หมดเพื่อให้ชิดขอบ */
+  margin: 0; 
+  
+  /* ลบความโค้งออกเพื่อให้เข้ามุมหน้าจอพอดี */
+  border-radius: 0; 
+  
+  padding: 30px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  
+  /* เส้นคั่นด้านบนให้ดูมีมิติ */
+  border-top: 1px solid #2b2b40;
+  
+  /* ดันลงล่างสุด */
+  margin-top: auto; 
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-brand {
+  color: #ffffff;
+  margin: 0;
+  display: inline-block;
+  padding-bottom: 5px;
+  font-size: 14px;
+}
+
+.footer-links a {
+  color: #4e73df;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer-bottom {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #2b2b40;
+  font-size: 13px;
+  color: #666;
+}
