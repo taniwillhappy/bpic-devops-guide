@@ -1,11 +1,22 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRoute } from 'vue-router' // เพิ่ม useRoute
+import { ref, computed } from 'vue' // เพิ่ม computed
 import './assets/sidebar.css'
 import './assets/footer.css'
-import { ref } from 'vue'
 
+const route = useRoute()
 const isCollapsed = ref(false)
-const isMobileMenuOpen = ref(false) // สถานะเปิด/ปิดเมนูบน Mobile
+const isMobileMenuOpen = ref(false)
+
+// ตรวจสอบว่า Route ปัจจุบันเกี่ยวข้องกับ Backend หรือไม่
+const isBackendOpen = computed(() => {
+  return route.path.includes('create_crud_backend')
+})
+
+// เช็คเฉพาะหน้า Frontend
+const isFrontendOpen = computed(() => {
+  return route.path.includes('create_crud_frontend')
+})
 
 const closeMobileMenu = () => {
   isMobileMenuOpen.value = false
@@ -65,18 +76,36 @@ const closeMobileMenu = () => {
           <span class="icon">🚀</span>
           <span v-if="!isCollapsed" class="text">การใช้งาน Postman <br>สำหรับงาน Backend</span>
         </router-link>
-        <router-link to="/create_crud_backend" class="menu-item" active-class="active" @click="closeMobileMenu">
-          <span class="icon">📑</span>
-          <span v-if="!isCollapsed" class="text">คู่มือสร้างโปรเจค CRUD <br>แบบ Modern (Backend)</span>
-        </router-link>
-        <router-link to="/create_crud_backend_2" class="menu-item" active-class="active" @click="closeMobileMenu">
-          <span class="icon">📑</span>
-          <span v-if="!isCollapsed" class="text">คู่มือสร้างโปรเจค CRUD <br>แบบ Modern (Backend) <br>หน้า 2</span>
-        </router-link>
-        <router-link to="/create_crud_frontend" class="menu-item" active-class="active" @click="closeMobileMenu">
-          <span class="icon">📖</span>
-          <span v-if="!isCollapsed" class="text">คู่มือสร้างโปรเจค CRUD <br>แบบ Modern (Frontend)</span>
-        </router-link>
+
+        <!-- Backend -->
+        <div class="menu-group">
+          <router-link to="/create_crud_backend" class="menu-item" active-class="active" @click="closeMobileMenu">
+            <span class="icon">📑</span>
+            <span v-if="!isCollapsed" class="text">คู่มือสร้างโปรเจค CRUD <br>(Backend)</span>
+          </router-link>
+
+          <div v-if="isBackendOpen && !isCollapsed" class="submenu">
+            <router-link to="/create_crud_backend_2" class="menu-item submenu-item" active-class="active" @click="closeMobileMenu">
+              <span class="text">หน้า 2: ต่อจากส่วนแรก</span>
+            </router-link>
+          </div>
+        </div>
+
+        <!-- Frontend -->
+        <div class="menu-group">
+          <router-link to="/create_crud_frontend" class="menu-item" active-class="active" @click="closeMobileMenu">
+            <span class="icon">📖</span>
+            <span v-if="!isCollapsed" class="text">คู่มือสร้างโปรเจค CRUD <br>(Frontend)</span>
+          </router-link>
+
+          <div v-if="isFrontendOpen && !isCollapsed" class="submenu">
+            <div class="menu-item submenu-item" style="opacity: 0.6;">
+              <span class="icon">✨</span>
+              <span class="text">กำลังจัดทำเนื้อหาเพิ่มเติม...</span>
+            </div>
+          </div>
+        </div>
+
         <router-link to="/file_download" class="menu-item" active-class="active" @click="closeMobileMenu">
           <span class="icon">📥</span>
           <span v-if="!isCollapsed" class="text">ดาวน์โหลดโปรเจค CRUD</span>
